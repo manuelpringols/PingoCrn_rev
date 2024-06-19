@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth, signInWithPopup, GoogleAuthProvider, User, signInWithCredential, signInWithEmailAndPassword, sendEmailVerification, browserLocalPersistence } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, User, onAuthStateChanged, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from "firebase/auth";
 import firebase from 'firebase/compat/app'; // Usa compat per retrocompatibilità
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class FirebaseService {
   signedIn!: boolean;
   googleEmail: any;
 
-  constructor(private afAuth:AngularFireAuth,) {
+  constructor(private afAuth:AngularFireAuth,private router:Router) {
     
 
     const firebaseConfig = {
@@ -37,13 +38,15 @@ export class FirebaseService {
     this.app = initializeApp(firebaseConfig);
     this.auth = getAuth();
 
-    // this.afAuth.setPersistence('local')
-    // .then(() => {
-    //   console.log('Persistence set to local');
-    // })
-    // .catch((error: any) => {
-    //   console.error('Error setting persistence:', error);
-    // });
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        // L'utente è già autenticato, naviga alla route 'map'
+        this.router.navigate(['/map']);
+      }
+    });
+  
+
+    
 
 
     
@@ -74,6 +77,14 @@ export class FirebaseService {
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
+      this.router.navigate(["/map"])
+      this.afAuth.setPersistence('local')
+    .then(() => {
+      console.log('Persistence set to local');
+    })
+    .catch((error: any) => {
+      console.error('Error setting persistence:', error);
+    });
       // ...
     })
     .catch((error) => {
@@ -90,6 +101,15 @@ export class FirebaseService {
     const token = credential!.accessToken;
     // The signed-in user info.
     const user = result.user;
+    this.router.navigate(["/map"])
+    this.afAuth.setPersistence('local')
+    .then(() => {
+      console.log('Persistence set to local');
+    })
+    .catch((error: any) => {
+      console.error('Error setting persistence:', error);
+    });
+
     // IdP data available using getAdditionalUserInfo(result)
     // ...
   }).catch((error) => {
@@ -102,6 +122,22 @@ export class FirebaseService {
     const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
   });
+  }
+
+  isPersistenceEnabled(): boolean {
+    // Verifica lo stato dell'autenticazione
+    const user = this.auth.currentUser;
+    return !!user;
+  }
+
+  setPersistenceNone() {
+    setPersistence(this.auth, browserSessionPersistence)
+      .then(() => {
+        console.log('Persistenza rimossa');
+      })
+      .catch((error: any) => {
+        console.error('Errore durante la rimozione della persistenza:', error);
+      });
   }
   
 

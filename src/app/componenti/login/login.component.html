@@ -4,7 +4,7 @@
         
       </div>
     
-      <form #formSign="ngForm" (ngSubmit)="onSubmitForm(formSign)" class="form">
+      <form #formSign="ngForm"  class="form">
         <div class="form-group">
           <label for="email">Email</label>
           <input  class="inputEmail"  type="email"  name="email"  placeholder="Enter your email" ngModel required email  >
@@ -14,7 +14,8 @@
         </div>
       
     
-        <button mat-button class="form-submit-btn" [disabled]="!formSign.valid"      >Accedi A PinGo</button>
+        <button mat-button class="form-submit-btn" [disabled]="!formSign.valid" (click)="accediForm(formSign)"      >Accedi A PinGo</button>
+        <button mat-button class="form-submit-btn"  (click)="accediFormGoogle()"      >Accedi A PinGo Con Google</button>
       </form>
     
       <p class="signup-link">

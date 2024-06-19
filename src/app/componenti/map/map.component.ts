@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { HttpService } from '../../../servizi/http.service';
 import { GoogleMap } from '@angular/google-maps';
+import { FirebaseService } from '../../../servizi/firebase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -8,6 +10,7 @@ import { GoogleMap } from '@angular/google-maps';
   styleUrl: './map.component.css'
 })
 export class MapComponent {
+
   @ViewChild(GoogleMap, { static: false }) googleMap!: GoogleMap;
 
   firebase_id_token = '7dKnIkD28mNyVP5NFmZFULgjmlB3';
@@ -34,7 +37,7 @@ export class MapComponent {
   };
   zoom = 6;
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private firebase:FirebaseService, private router:Router) {}
 
   ngOnInit(): void {
     // Carica i dati e chiama aggiungiMarker quando i dati sono disponibili
@@ -128,5 +131,11 @@ export class MapComponent {
 
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
+  }
+
+  esciSessione() {
+    this.firebase.setPersistenceNone()
+    console.log("Persistenza Rimossa")
+    this.router.navigate(["/login"])
   }
 }

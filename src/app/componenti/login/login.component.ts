@@ -11,8 +11,21 @@ export class LoginComponent {
   constructor(private firebase:FirebaseService){}
 
 
-onSubmitForm(_t8: NgForm) {
+ngOnInit(){
+  
+}
+
+accediForm(form: NgForm) {
+  const email = form.value.email
+  const password = form.value.password
+
+  
+  this.firebase.signInBasic(email,password)
+}
+
+accediFormGoogle(){
   this.firebase.signInGoogle()
+
 }
 
 }
