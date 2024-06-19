@@ -1,0 +1,18 @@
+<div class="modal-overlay" *ngIf="isVisible">
+    <div class="modal">
+      <div class="modal-header" >
+        <h2>Conferma Eliminazione</h2>
+        <button class="close-button" (click)="onCloseModal()">X</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Sei sicuro di voler eliminare l'elemento con ID: {{ idPingToDelete }}?
+        </p>
+        <button style="--clr: #0ff0fc" (click)="onCloseModal()" ><span>Indietro</span><i></i></button>
+        <button (click)="confirmDeletePing()" style="--clr: #ff44cc" ><span>Elimina</span><i></i></button>
+      </div>
+    </div>
+  </div>
+  
+  
+  

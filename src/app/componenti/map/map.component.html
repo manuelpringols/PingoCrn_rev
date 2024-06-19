@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+<div *ngIf="bottoneStateEditor" [@fadeInOut]>
+    <app-ping-editor ></app-ping-editor>
+  </div>
+
+
+  <div *ngIf="bottoneStateGestione" [@fadeInOut]>
+    <app-gestione-utenti ></app-gestione-utenti>
+  </div>
+
+  <div class="pagina"> 
+    <div class="toolbar">
+        <h1>PinGo </h1>
+        <button>Utenti Connessi</button>
+        <button> Mostra Ping</button>
+        <button>Bossetti Libero</button>
+
+
+        <div><img class="foto-profilo" style="border-radius: 50%; border: 1px outset rgb(87, 87, 87); width: 45px;height:45px" src="https://static-cdn.jtvnw.net/jtv_user_pictures/a13cea14-2d44-4e03-9423-17cf4eac8a72-profile_image-300x300.png">Nome Utente 
+            
+            <img src="/assets/icons8-pencil-drawing-94.png "style=" width: 20px;height:20px;margin-left:5px" >
+        </div>
+        
+        
+    </div>
+
+
+    
+
+    <div class="div-map">
+        <google-map 
+    height="70vh"
+    width="70vw"
+    [center]="center" 
+    [zoom]="zoom"
+    (mapClick)="moveMap($event)"
+    (mapMousemove)="move($event)">
+
+    <map-marker
+    *ngFor="let marker of markers"
+    [position]="marker"
+  ></map-marker>
+    </google-map>
+    
+
+    <div>Latitude: {{display?.lat}}</div>
+    <div>Longitude: {{display?.lng}}</div>
+
+    
+
+    <div>
+        <p>Icon Designed by </p><a href="https://icons8.com">   icons8</a>
+      </div>
+ </div>
+    
+    <div class="card">
+
+        
+        
+        <div class="bg">
+            <h1>Comandi Lista</h1>
+            <mat-divider></mat-divider>
+
+            <div class="buttoni">
+
+                
+            
+            <button class="buttonCard" (click)="mostraEditor()"> 
+                <img src="/assets/1490793853-user-interface22_82349.png">
+                <span class="material-symbols-outlined"></span>
+                
+             Ping Editore</button>
+
+             <button class="buttonCard" (click)="mostraGestore()"> 
+                <img src="/assets/icons8-utenti-100.png " >  
+                <span class="material-symbols-outlined"></span>
+                
+             Gestione Utenti</button>
+
+             <button class="buttonCard"> 
+                <img src="/assets/icons8-add-message-100.png">
+                <span class="material-symbols-outlined"></span>
+                
+             Manda Alert</button>
+
+            </div>
+            
+        </div>
+        <div class="blob"></div>
+      </div>
+    
+      
+     
+   
+      
+  </div>
+
+  

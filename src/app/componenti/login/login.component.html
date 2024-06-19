@@ -1,0 +1,25 @@
+<div class="pagina">
+    <div class="form-container">
+      <div class="logo-container">
+        
+      </div>
+    
+      <form #formSign="ngForm" (ngSubmit)="onSubmitForm(formSign)" class="form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input  class="inputEmail"  type="email"  name="email"  placeholder="Enter your email" ngModel required email  >
+       
+          <label for="email">Password</label>
+          <input type="password"  name="password" placeholder="Enter your password" ngModel  required>
+        </div>
+      
+    
+        <button mat-button class="form-submit-btn" [disabled]="!formSign.valid"      >Accedi A PinGo</button>
+      </form>
+    
+      <p class="signup-link">
+        Don't have an account?
+        <a class="signup-link link"> Sign up now</a>
+      </p>
+    </div>
+  </div>
